@@ -6,7 +6,7 @@ include "../config.php";
 //mysql_connect($host, $user, $pwd);
 //mysql_select_db($dbname);
 
-$conexao = mysqli_connect('localhost','root','');
+
 $banco = mysqli_select_db($conexao,'bdog');
 mysqli_set_charset($conexao,'utf8');
 

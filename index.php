@@ -44,7 +44,7 @@
               $_SESSION['nivel'] = $data['nivel'];
               $_SESSION['nom_usuario'] = $data['nom_usuario'];
              // header("location:alarme/index.php");
-              header("location:application/customer/index.php");
+              header("location:application/og/index.php");
           }
           else {
             $error="Usuario e Senha incorretos!!";

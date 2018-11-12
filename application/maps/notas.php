@@ -5,7 +5,7 @@
    
     mysql_connect($host, $user, $pwd);
     mysql_select_db($dbname);
-    $sQuery ="SELECT * from  customer where  id = ". $_GET["id"];
+    $sQuery ="SELECT * from tbog where  id = ". $_GET["id"];
     $oUsers = mysql_query($sQuery);
     $reg = mysql_fetch_object($oUsers);
 

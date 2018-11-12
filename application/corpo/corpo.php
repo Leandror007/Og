@@ -145,7 +145,7 @@ echo '<meta http-equiv="refresh" content="1 ; URL=../../index.php" />';
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="../customer/index.php"><i class="fa fa-circle-o"></i> Abertos</a></li>
+                <li><a href="../og/index.php"><i class="fa fa-circle-o"></i> Abertos</a></li>
                 <li><a href="../excluidos/index.php"><i class="fa fa-circle-o"></i> Fechados</a></li>
               </ul>
             </li>
