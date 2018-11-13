@@ -1,286 +1,185 @@
 <?php include "../corpo/corpo.php"; ?>
 
 
-<?php
-
-    include "../db_connect.php";
-  
-   $ds_data_in =  $_POST['ds_data_in'];
-   $ds_data_fim =  $_POST['ds_data_fim'];
-   
-   
-    $con =  mysql_connect($servername, $username, $password) or die($erro[0]);
-    mysql_select_db($dbname, $con) or die($erro[1]);
-    //$sQuery ="SELECT * from  tbog where  id = ". $_GET["id"];
-    $sQuery ="SELECT * FROM tbog WHERE dtacionamento BETWEEN '".$ds_data_in."%' and '".$ds_data_fim."%' AND _status LIKE 'Fechado' ORDER BY id DESC";
-
-    $oUsers = mysql_query($sQuery,$con) or die(mysql_error());
-    $oU = mysql_query($sQuery,$con) or die(mysql_error());
-
-    $reg = mysql_fetch_array($oUsers);
-    mysql_data_seek($oUsers, '0'); //corrigi o valor do while para iniciar em 0
-    $totalRows_Rs = mysql_num_rows($oUsers);
-
-    $reg1 = mysql_fetch_array($oU);
-    mysql_data_seek($oU, '0'); //corrigi o valor do while para iniciar em 0
-
-   // $msg = $_REQUEST["msg"];
-    mysql_set_charset('utf8');
-
-    
-
-?>
-
-<script>
-  function gerarScript(id){       
-    window.open('script.php?id='+id, 'Pagina', 'STATUS=NO, TOOLBAR=NO, LOCATION=NO, DIRECTORIES=NO, RESISABLE=NO, SCROLLBARS=YES, TOP=50, LEFT=170, WIDTH=480, HEIGHT=380')+id;
-  }
-
-</script>
-
+<?php  if($_SESSION['nivel'] == 'Sup') { ?>
           <!-- =============================================== -->
 
           <!-- Content Wrapper. Contains page content -->
           <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-             
+              <h1>
+                Cadastro de
+                <small>Coordenadas</small>
+              </h1>
+              <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                <li><a href="#">Abertos</a></li>
+                
+              </ol>
             </section>
-
-     <?php
-
-
-$result1 = 0;
-$result2 = 0;
-$result3 = 0;
-$result4 = 0;
-
-  while ($oRow1 = mysql_fetch_array($oU)) {
-
-
-       $dataFuturo = $oRow1['dtfechamento'].' '.$oRow1['hrfechamento'];
-       $dataAtual  = $oRow1['dtacionamento'].' '.$oRow1['hracionamento'];
-       $date_time  = new DateTime($dataAtual);
-       $diff       = $date_time->diff( new DateTime($dataFuturo));
-
-
-     
-
-
-        $dataA2 = date('d/m/Y H:i:s', strtotime("+2 hour",strtotime($dataAtual)));
-        $dataA4 = date('d/m/Y H:i:s', strtotime("+4 hour",strtotime($dataAtual)));
-        $dataA6 = date('d/m/Y H:i:s', strtotime("+6 hour",strtotime($dataAtual)));
-        $dataAf = date('d/m/Y H:i:s', strtotime($dataFuturo));
-        $dataAa = date('d/m/Y H:i:s', strtotime($dataAtual));
-
-
-if($dataAf <= $dataA2){
-   
-    $result1++;   
-
-}
-else if($dataAf <= $dataA4){
-   
-    $result2++;    
-
-}
-else if($dataAf <= $dataA6){
-   
-    $result3++;    
-
-}
-else {
-   
-    $result4++;    
-    
-}
-       
- 
-
-}
-
-?>       
 
             <!-- ========================================================================================================== -->
             <!-- Main content -->
 
 	  <section class="content">
-
-
-          <!-- =========================================================== -->
-
-          <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box bg-aqua">
-                <span class="info-box-icon"><i class="fa f fa-ticket"></i></span>
-                <div class="info-box-content">
-                  <span class="info-box-text">0 a 2 Horas</span>
-                  <span class="info-box-number"><?php echo $result1;  ?></span>
-                  
-                  <span class="progress-description">
-                    Resolvido 0 a 2 horas
-                  </span>
-                </div><!-- /.info-box-content -->
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box bg-green">
-                <span class="info-box-icon"><i class="fa  fa-ticket"></i></span>
-                <div class="info-box-content">
-                  <span class="info-box-text">2 a 4 Horas</span>
-                  <span class="info-box-number"><?php echo $result2;  ?></span>
-                  <span class="progress-description">
-                    Resolvido 2 a 4 horas
-                  </span>
-                </div><!-- /.info-box-content -->
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box bg-yellow">
-                <span class="info-box-icon"><i class="fa fa-ticket"></i></span>
-                <div class="info-box-content">
-                  <span class="info-box-text">4 a 6</span>
-                  <span class="info-box-number"><?php echo $result3;  ?></span>               
-                  <span class="progress-description">
-                    Resolvido 4 a 6 horas
-                  </span>
-                </div><!-- /.info-box-content -->
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box bg-red">
-                <span class="info-box-icon"><i class="fa fa-ticket"></i></span>
-                <div class="info-box-content">
-                  <span class="info-box-text">+ 6</span>
-                  <span class="info-box-number"><?php echo $result4;  ?></span>                 
-                  <span class="progress-description">
-                    Resolvido + 6 horas
-                  </span>
-                </div><!-- /.info-box-content -->
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-
-          <!-- =========================================================== -->
-
-
-
-
-
-
- <div class="row">
-            <div class="col-xs-12">
+              <!-- Default box -->
               <div class="box">
-                <div class="box-header"> 
-                  <h3 class="box-title">Tabela de Periodo - De <?php echo date('d/m/Y',strtotime($ds_data_in));  ?> até <?php echo date('d/m/Y',strtotime($ds_data_fim));  ?> </h3>
-                  <div class="box-tools">
-                    <div class="input-group" style="width: 150px;">
-                      <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
-                      <div class="input-group-btn">
-                        <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                      </div>
-                    </div>
+                <div class="box-body">
+			<div class="col-md-12">	
+
+				<div class="removeMessages"></div>
+
+				<button class="btn btn-default pull pull-right" data-toggle="modal" data-target="#addMember" id="addMemberModalBtn">
+					<span class="glyphicon glyphicon-plus-sign"></span>	Adicionar Coordenadas
+				</button>
+
+				<br /> <br /> <br />
+
+				<table class="table" id="manageMemberTable">					
+					<thead>
+						<tr class="success">
+									<th>no</th>
+									<th>Regiao</th>													
+									<th>Latitude X</th>
+									<th>Longitude Y</th>								
+									<th>Regiao</th>
+									<th>Opções</th>
+								</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<!-- add modal -->
+			<div class="modal fade" tabindex="-1" role="dialog" id="addMember">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span>	Adicionar Região</h4>
+						</div>
+						
+						<form class="form-horizontal" action="php_action/create.php" method="POST" id="createMemberForm">
+
+							<div class="modal-body">
+								<div class="messages"></div>
+
+								<div class="form-group"> <!--/here teh addclass has-error will appear -->
+									<label for="regiao" class="col-sm-2 control-label">Regional</label>
+									<div class="col-sm-10"> 
+										<input type="text" class="form-control" id="regiao" name="regiao" maxlength="5" placeholder="Regional">
+										<!-- here the text will apper  -->
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="latitude_x" class="col-sm-2 control-label">Latitude x</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="latitude_x" name="latitude_x" placeholder="latitude_x">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="longitude_y" class="col-sm-2 control-label">Longitude y</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="longitude_y" name="longitude_y" placeholder="Longitude_y">
+									</div>
+								</div>
+
+                <div class="form-group">
+                  <label for="cidade" class="col-sm-2 control-label">Cidade</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade">
                   </div>
-                </div><!-- /.box-header -->
-                <div class="box-body table-responsive no-padding">
-                  <table class="table table-hover">
-                    <tr>
-                        <th># </th>
-                        <th><center>Regional </center></th>
-                        <th><center>OG </center></th>
-                        <th><center>Data abertura </center></th>
-                        <th><center>Dora abertura </center></th>
-                        <th><center>Data fechamento </center></th>
-                        <th><center>Hora fechamento </center></th>
-                        <th><center>Tempo </center></th>
-                        <th>Resolvido entre </center></th>
-                    </tr>
+                </div>
+															 		
 
-<?php
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+								<button type="submit" class="btn btn-primary">Adicionar</button>
+							</div>
+						</form> 
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+			<!-- /add modal -->
 
+			<!-- remove modal -->
+			<div class="modal fade" tabindex="-1" role="dialog" id="removeMemberModal">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"><span class="glyphicon glyphicon-trash"></span> Remover Cidade</h4>
+						</div>
+						<div class="modal-body">
+							<p>Você deseja excluir o Agente?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
+							<button type="button" class="btn btn-primary" id="removeBtn">Remover</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+			<!-- /remove modal -->
 
-$result1 = 0;
-$result2 = 0;
-$result3 = 0;
-$result4 = 0;
+			<!-- edit modal -->
+			<div class="modal fade" tabindex="-1" role="dialog" id="editMemberModal">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"><span class="glyphicon glyphicon-edit"></span> Edita Regiao</h4>
+						</div>
 
-  while ($oRow = mysql_fetch_array($oUsers)) {
-      echo '<tr>';
+						<form class="form-horizontal" action="php_action/update.php" method="POST" id="updateMemberForm">	      
 
-        echo '<td> <center>'. $oRow['id'] . '</center></td>';
-        echo '<td> <center>'. $oRow['regional'] . '</center></td>';
-        echo '<td> <center>'. $oRow['og'] . '</center></td>';
-        echo '<td> <center>'. $oRow['dtacionamento'] . '</center></td>';
-        echo '<td> <center>'. $oRow['hracionamento'] . '</center></td>';
-        echo '<td> <center>'. $oRow['dtfechamento'] . '</center></td>';
-        echo '<td> <center>'. $oRow['hrfechamento'] . '</center></td>';
+							<div class="modal-body">
+								
+								<div class="edit-messages"></div>
 
-
-       $dataFuturo = $oRow['dtfechamento'].' '.$oRow['hrfechamento'];
-       $dataAtual  = $oRow['dtacionamento'].' '.$oRow['hracionamento'];
-       $date_time  = new DateTime($dataAtual);
-       $diff       = $date_time->diff( new DateTime($dataFuturo));
-
-
-       echo '<td> <center>'. $diff->format('%d dia(s), %H hora(s), %i minuto(s) e %s segundo(s)'). '</center></td>';
-
-
-        $dataA2 = date('d/m/Y H:i:s', strtotime("+2 hour",strtotime($dataAtual)));
-        $dataA4 = date('d/m/Y H:i:s', strtotime("+4 hour",strtotime($dataAtual)));
-        $dataA6 = date('d/m/Y H:i:s', strtotime("+6 hour",strtotime($dataAtual)));
-        $dataAf = date('d/m/Y H:i:s', strtotime($dataFuturo));
-        $dataAa = date('d/m/Y H:i:s', strtotime($dataAtual));
-
-
-if($dataAf <= $dataA2){
-    echo '<td><span class="btn btn-block btn-primary btn-sm"> 0 e 2 horas </span></td>'; 
-    $result1++;   
-
-}
-else if($dataAf <= $dataA4){
-    echo '<td><span class="btn btn-block btn-success btn-sm"> 2 e 4 horas </span></td>';
-    $result2++;    
-
-}
-else if($dataAf <= $dataA6){
-    echo '<td><span class="btn btn-block btn-warning btn-sm"> 4 e 6 horas </span></td>';
-    $result3++;    
-
-}
-else {
-    echo '<td><span class="btn btn-block btn-danger btn-sm">+ 6 horas </span></td>';
-    $result4++;    
-    
-}
-       
- echo '</tr>';
-
-}
-
-?>
-
-
-                  </table>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-            </div>
-          </div>
-        </section><!-- /.content -->
-
-
-
-
-
+								<div class="form-group"> <!--/here teh addclass has-error will appear -->
+									<label for="editregiao" class="col-sm-2 control-label">Regional</label>
+									<div class="col-sm-10"> 
+										<input type="text" class="form-control" id="editregiao" maxlength="5" name="editregiao" placeholder="Nome">
+										<!-- here the text will apper  -->
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="editlatitude_x" class="col-sm-2 control-label">Latitude x</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="editlatitude_x" name="editlatitude_x" placeholder="latitude_x">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="editlongitude_y" class="col-sm-2 control-label">Longitude y</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="editlongitude_y" name="editlongitude_y" placeholder="Longitude_y">
+									</div>
+								</div>
+								<div class="form-group">
+                  <label for="editcidade" class="col-sm-2 control-label">Cidade</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="editcidade" name="editcidade" placeholder="Cidade">
+                  </div>
+                </div>
+								
+							</div>
+							<div class="modal-footer editMemberModal">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+								<button type="submit" class="btn btn-primary">Salvar Mudanças</button>
+							</div>
+						</form>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+			<!-- /edit modal -->
 
   </div><!-- /.content-wrapper -->
 
-          <footer class="main-footer">
-            <div class="pull-right hidden-xs">
-              <b>Version</b> 2.3.0
-            </div>
-            
-          </footer>
-
+      
           <!-- Control Sidebar -->
           <aside class="control-sidebar control-sidebar-dark">
             <!-- Create the tabs -->
@@ -449,15 +348,15 @@ else {
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 
+<?php  }else{ echo "<script>window.setTimeout('history.back(-2)', 5);</script> ";}  ?>
 
+	<!-- jquery plugin -->
+	<script type="text/javascript" src="assests/jquery/jquery.min.js"></script>
+	<!-- bootstrap js -->
+	
 
-  <!-- jquery plugin -->
-  <script type="text/javascript" src="assests/jquery/jquery.min.js"></script>
-  <!-- bootstrap js -->
-  
-
-  <!-- include custom index.js -->
-  <script type="text/javascript" src="custom/js/index.js?<?php echo time(); ?>"></script>
+	<!-- include custom index.js -->
+	<script type="text/javascript" src="custom/js/index.js?<?php echo time(); ?>"></script>
 
 
 
@@ -481,7 +380,10 @@ else {
     <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../../plugins/datatables/dataTables.bootstrap.min.js"></script>
     <script src="../../plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
-    <script src="customer.js?<?php echo time(); ?>"></script>
 
-  </body>
-  </html>
+
+
+
+
+</body>
+</html>

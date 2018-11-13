@@ -1,6 +1,6 @@
 <?php 
 
-require_once 'db_connect.php';
+require_once '../../db_connect.php';
 
 $data = date('Y-m-d H:i:s');
 

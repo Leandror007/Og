@@ -6,14 +6,14 @@ $output = array('success' => false, 'messages' => array());
 
 $memberId = $_POST['member_id'];
 
-$sql = "DELETE FROM usuarios WHERE cod_usuario = {$memberId}";
+$sql = "DELETE FROM maps WHERE id = {$memberId}";
 $query = $connect->query($sql);
 if($query === TRUE) {
 	$output['success'] = true;
-	$output['messages'] = 'Usuario removido com sucesso!!';
+	$output['messages'] = 'Região removido com sucesso!!';
 } else {
 	$output['success'] = false;
-	$output['messages'] = 'Erro na remoção do usuário!!';
+	$output['messages'] = 'Erro na remoção da região!!';
 }
 
 // close database connection

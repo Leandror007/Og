@@ -5,10 +5,9 @@
 
 <?php
 
-    include "../config.php";
-  
+    include "../db_connect.php";  
    
-    mysql_connect($host, $user, $pwd);
+    mysql_connect($servername, $username, $password);
     mysql_select_db($dbname);
     $sQuery ="SELECT * from  tbog where  id = ". $_GET["id"];
     $oUsers = mysql_query($sQuery);

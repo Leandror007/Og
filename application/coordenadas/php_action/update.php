@@ -8,13 +8,13 @@ if($_POST) {
 	$validator = array('success' => false, 'messages' => array());
 
 	$id 				= $_POST['member_id'];
-	$nom_usuario 		= $_POST['editNom_usuario'];
-	$login 				= $_POST['editLogin'];
-	$pwd_usuario 		= md5($_POST['editPwd_usuario']);
-	$nivel 				= $_POST['editNivel'];
-	$ds_status 			= $_POST['editDs_status'];
+	$regiao 		    = $_POST['editregiao'];
+	$latitude_x 		= $_POST['editlatitude_x'];
+	$longitude_y 		= $_POST['editlongitude_y'];
+	$cidade 			= $_POST['editcidade'];
+	
 
-	$sql = "UPDATE usuarios SET nom_usuario = '$nom_usuario', login = '$login', pwd_usuario = '$pwd_usuario', nivel = '$nivel', ds_status = '$ds_status' WHERE cod_usuario = $id";
+	$sql = "UPDATE maps SET regiao = '$regiao', latitude_x = '$latitude_x', longitude_y = '$longitude_y', cidade = '$cidade' WHERE id = $id";
 	$query = $connect->query($sql);
 
 	if($query === TRUE) {			

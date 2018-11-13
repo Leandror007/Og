@@ -177,7 +177,8 @@ echo '<meta http-equiv="refresh" content="1 ; URL=../../index.php" />';
                 <li><a href="../resolucao/buscaregistro.php"><i class="fa fa-circle-o"></i> Busca</a></li>
               </ul>
             </li>
-                                           
+             
+             <li><a href="../coordenadas/index.php"><i class="fa fa-safari"></i> <span>Coordenadas</span></a></li>                              
      
             <li><a href="../maps/map.php" target="_Banck"><i class="fa fa-book"></i> <span>Mapa</span></a></li>
 
@@ -192,6 +193,8 @@ echo '<meta http-equiv="refresh" content="1 ; URL=../../index.php" />';
               <li><a href="../agentes/index.php"><i class="fa fa-circle-o text-green"></i>Usuario</a></li>
             </ul>
           </li>
+
+           <li><a href="../localidades.php" target="_Banck"><i class="fa fa-download"></i> <span>Localidade</span></a></li>
 
  <?php  }else{
 

@@ -2,10 +2,10 @@
 
 <?php
 
-    include "../config.php";
+    include "../db_connect.php";
   
    
-    $con =  mysql_connect($host, $user, $pwd) or die($erro[0]);
+    $con =  mysql_connect($servername, $username, $password) or die($erro[0]);
     mysql_select_db($dbname, $con) or die($erro[1]);
     //$sQuery ="SELECT * from  tbog where  id = ". $_GET["id"];
     $sQuery ="SELECT * FROM tbog WHERE _status LIKE 'Fechado' ORDER BY id DESC LIMIT 30";
